@@ -1,0 +1,32 @@
+#pragma once
+
+
+// 씬 이름 단축?
+enum SCENEID
+{
+	SCENEID_LOGO,
+	SCENEID_MENU,
+	SCENEID_STAGE,
+	SCENEID_STAGE2,
+	SCENEID_STAGE3,
+	SCENEID_HOWTO,
+	SCENEID_WIN,
+	SCENEID_OVER,
+	SCENEID_EXIT,
+};
+
+// 오브젝트 이름 단축?
+enum OBJID
+{
+	OBJID_ENEMY, // 몬스터
+	OBJID_BULLET, // 공격
+	OBJID_SKBULLET, // 스킬
+	OBJID_MAX, // 3
+};
+
+enum ENEMYID
+{
+	ENEMYID_PIG,
+	ENEMYID_RABBIT,
+	ENEMYID_DOG,
+};
