@@ -48,7 +48,8 @@ void ObjectManager::Initialize()
 		//for (int i = 0; i < 128; i++)
 		//	ObjectList[OBJID_ENEMY][i] = ObjectFactory<Pig>::CreateObject();
 		for (int i = 0; i < 4; i++)
-		Object* pObj = ObjectFactory<Pig>::CreateObject();
+			ObjectManager::GetInstance()->AddObject(
+				ObjectFactory<Bullet>::CreateObject());
 
 		break;
 	case ENEMYID_RABBIT:
@@ -66,7 +67,8 @@ void ObjectManager::Initialize()
 		//for (int i = 0; i < 128; i++)
 		//	ObjectList[OBJID_ENEMY][i] = ObjectFactory<Rabbit>::CreateObject();
 		for (int i = 0; i < 5; i++)
-			Object* pObj = ObjectFactory<Rabbit>::CreateObject();
+			ObjectManager::GetInstance()->AddObject(
+				ObjectFactory<Rabbit>::CreateObject());
 		break;
 	case ENEMYID_DOG:
 		BoxMax = 1;
@@ -84,8 +86,12 @@ void ObjectManager::Initialize()
 		//ObjectList[OBJID_ENEMY][i] = ObjectFactory<Dog>::CreateObject();
 		//ObjectList[OBJID_BULLET][i] = ObjectFactory<Bullet>::CreateObject();
 		//ObjectList[OBJID_SKBULLET][i] = ObjectFactory<SkillBullet>::CreateObject();
-		AddObject(ObjectFactory<Bullet>::CreateObject());
-		AddObject(ObjectFactory<SkillBullet>::CreateObject());
+		//AddObject(ObjectFactory<Bullet>::CreateObject());
+		//AddObject(ObjectFactory<SkillBullet>::CreateObject());
+		ObjectManager::GetInstance()->AddObject(
+			ObjectFactory<Bullet>::CreateObject());
+		ObjectManager::GetInstance()->AddObject(
+			ObjectFactory<SkillBullet>::CreateObject());
 	}
 
 	
