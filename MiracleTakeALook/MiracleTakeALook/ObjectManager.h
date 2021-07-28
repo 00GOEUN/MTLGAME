@@ -17,9 +17,10 @@ public:
 		return m_pInstance;
 	}
 private:
+	map<string, list<Object*>> ObjectList;
 	int pEnemyID;
 	Object* pPlayer; // 플레이어
-	Object* ObjectList[OBJID_MAX][128];  // 오브젝트리스트[2][128] : 2차원 배열로 생성
+	//Object* ObjectList[OBJID_MAX][128];  // 오브젝트리스트[2][128] : 2차원 배열로 생성
 	int EnemyCount; //몬스터 수
 	Object* BoxList[8];
 
@@ -30,10 +31,8 @@ public:
 
 	int GetEnemyID() const { return pEnemyID; }
 	void SetEnemyID(const int& _pEnemyID) { pEnemyID = _pEnemyID; }
-
-	void AddObject(Object* _pObject);
-
 public:
+	void AddObject(Object* _pObject);
 	void Initialize();
 	void Update();
 	void Render();

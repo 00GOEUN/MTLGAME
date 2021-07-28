@@ -34,7 +34,7 @@ public: //  ¹ºµ¥!!! ¹¹³Ä±³!!! ¹ºµ¥!!!!!!! ¸ð¸£°Ú´Ù°í!!!
 	void SetActive(const bool& _Active) { Active = _Active; }
 
 
-	string GetKey() const { return m_strKey; }
+	string GetKey() { return m_strKey; }
 	void SetKey(const bool& _strKey) { m_strKey = _strKey; }
 
 

@@ -446,11 +446,11 @@ void ObjectManager::CreateEnemy()
 	
 }
 
-void AddObject(Object* _pObject)
+void ObjectManager::AddObject(Object* _pObject)
 {
 	//** 지금 전달받은 매개변수의 키값을 확인한다.
 	//** 만약 기존에 키값이 존재 하지 않는다면 end() 를 반환 함.
-	map<string, list<Object*>>::iterator iter = ObjectList.find(_pObject->Getkey());
+	map<string, list<Object*>>::iterator iter = ObjectList.find(_pObject->m_strKey());
 
 	//** iter가 ObjectList.end()와 같다면 기존에 키값이 존재하지 않음.
 	//** 만약 존재하지 않는다면....
@@ -463,7 +463,7 @@ void AddObject(Object* _pObject)
 		TempList.push_back(_pObject);
 
 		//** 오브젝트를 추가한 리스트를 오브젝트의 키값으로 map에 추가. 
-		ObjectList.insert(make_pair(_pObject->Getkey(), TempList));
+		ObjectList.insert(make_pair(_pObject->m_strKey(), TempList));
 	}
 
 	//** 만약 기존에 동일한 키값이 존재 한다면....
