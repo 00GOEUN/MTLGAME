@@ -22,7 +22,7 @@ private:
 	Object* pPlayer; // 플레이어
 	//Object* ObjectList[OBJID_MAX][128];  // 오브젝트리스트[2][128] : 2차원 배열로 생성
 	int EnemyCount; //몬스터 수
-	Object* BoxList[8];
+	Object* BoxList[8]; // map<string, list<Object*>> ObjectList; 만들어줘야함? 아마
 
 public:
 	Object* GetPlayer() const { return pPlayer; } // 플레이어
