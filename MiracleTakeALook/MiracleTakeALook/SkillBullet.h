@@ -6,7 +6,7 @@ private:
 	//char* Texture[0][4]; // Texture를 [0]~ [3]만큼 생성
 	Object* Target;
 public:
-	virtual void Initialize()override { strKey = "SkBullet"; }
+	virtual void Initialize()override;
 	virtual int Update()override;
 	virtual void Render()override;
 	virtual void Release()override;

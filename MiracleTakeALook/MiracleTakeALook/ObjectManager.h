@@ -22,11 +22,21 @@ private:
 	Object* pPlayer; // 플레이어
 	//Object* ObjectList[OBJID_MAX][128];  // 오브젝트리스트[2][128] : 2차원 배열로 생성
 	int EnemyCount; //몬스터 수
-	Object* BoxList[8]; // map<string, list<Object*>> ObjectList; 만들어줘야함? 아마
+	Object* BoxList[8];
 
 public:
+	list<Object*>* GetObjectList(string _strKey)
+	{
+		map<string, list<Object*>>::iterator iter = ObjectList.find(_strKey);
+
+		if (iter == ObjectList.end())
+			return NULL;
+
+		return &iter->second;
+	}
+
 	Object* GetPlayer() const { return pPlayer; } // 플레이어
-	void SetPick(const int& _pPick){ Pick = _pPick;}
+	void SetPick(const int& _pPick) { Pick = _pPick; }
 	void SetPlayer(Object* _pPlayer) { pPlayer = _pPlayer; } // 입력을 받아오면 player 함수에 넣을 것
 
 	int GetEnemyID() const { return pEnemyID; }

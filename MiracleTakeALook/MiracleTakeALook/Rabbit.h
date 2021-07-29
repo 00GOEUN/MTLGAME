@@ -10,7 +10,7 @@ private:
 	Object* m_Bullet[128];
 	float PosX[2];
 public:
-	virtual void Initialize()override { strKey = "Rabbit"; }
+	virtual void Initialize()override;
 	virtual int Update()override;
 	virtual void Render()override;
 	virtual void Release()override;

@@ -7,7 +7,7 @@ private:
 	float Speed;
 	float PosX[2];
 public:
-	virtual void Initialize()override { strKey = "Pig"; }
+	virtual void Initialize()override;
 	virtual int Update()override;
 	virtual void Render()override;
 	virtual void Release()override;

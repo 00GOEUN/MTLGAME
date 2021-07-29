@@ -24,17 +24,19 @@ ObjectManager* ObjectManager::m_pInstance = NULL;
 
 ObjectManager::ObjectManager()
 {
+
 }
 
 ObjectManager::~ObjectManager()
 {
 	Release();
 }
+
 void ObjectManager::AddObject(Object* _pObject)
 {
 	//** 지금 전달받은 매개변수의 키값을 확인한다.
 	//** 만약 기존에 키값이 존재 하지 않는다면 end() 를 반환 함.
-	map<string, list<Object*>>::iterator iter = ObjectList.find(_pObject->m_strKey());
+	map<string, list<Object*>>::iterator iter = ObjectList.find(_pObject->GetKey());
 
 	//** iter가 ObjectList.end()와 같다면 기존에 키값이 존재하지 않음.
 	//** 만약 존재하지 않는다면....
@@ -47,7 +49,7 @@ void ObjectManager::AddObject(Object* _pObject)
 		TempList.push_back(_pObject);
 
 		//** 오브젝트를 추가한 리스트를 오브젝트의 키값으로 map에 추가. 
-		ObjectList.insert(make_pair(_pObject->m_strKey(), TempList));
+		ObjectList.insert(make_pair(_pObject->GetKey(), TempList));
 	}
 
 	//** 만약 기존에 동일한 키값이 존재 한다면....
@@ -133,7 +135,7 @@ void ObjectManager::Update()
 	//	// CreateEnemy();
 
 
-	
+
 
 	//** 라인 충돌
 	for (int i = 0; i < BoxMax; i++)
@@ -142,7 +144,7 @@ void ObjectManager::Update()
 		{
 			if (CollisionManager::CollisionLine(pPlayer->GetTransform(), BoxList[i]->GetTransform()))
 			{
-				if ( (pPlayer->GetPosition().y + pPlayer->GetScale().y) >= BoxList[i]->GetPosition().y)
+				if ((pPlayer->GetPosition().y + pPlayer->GetScale().y) >= BoxList[i]->GetPosition().y)
 				{
 					if (BoxList[i]->GetKey() == "Ground")
 					{
@@ -159,42 +161,61 @@ void ObjectManager::Update()
 			}
 		}
 	}
-	
 
 
 
-	
 
 
-	// 2번 반복
-	for (int i = 0; i < OBJID_MAX; i++)
 	{
-		// 128번 반복
-		for (int j = 0; j < 128; j++)
-		{
-			int iResult = 0; // ?
-			if (ObjectList[i][j]->GetActive()) 
-				iResult = ObjectList[i][j]->Update();
-			if (iResult == 1)
-				ObjectList[i][j]->SetActive(false);
-			if (iResult == -1)
-				--EnemyCount; // 몬스터 수 -1
+		int iResult = 0;
 
+		for (map<string, list<Object*>>::iterator iter = ObjectList.begin();
+			iter != ObjectList.end(); ++iter)
+		{
+			for (list<Object*>::iterator iter2 = iter->second.begin();
+				iter2 != iter->second.end(); ++iter2)
+			{
+				iResult = 0;
+
+				if ((*iter2)->GetActive())
+					iResult = (*iter2)->Update();
+
+				if (iResult == 1)
+					(*iter2)->SetActive(false);
+
+				if (iResult == -1)
+					--EnemyCount; // 몬스터 수 -1
+			}
 		}
 	}
 
-	// 모르겠음 타겟? ㅁㄹ
-	for (int i = 0; i < 128; i++)
+
+	map<string, list<Object*>>::iterator iterPig = ObjectList.find("Pig");
+	map<string, list<Object*>>::iterator iterBullet = ObjectList.find("Bullet");
+
+	if (iterPig != ObjectList.end() && iterBullet != ObjectList.end())
+		for (list<Object*>::iterator iter = iterPig->second.begin();
+			iter != iterPig->second.end(); ++iter)// 모르겠음 타겟?
 	{
-		if (ObjectList[OBJID_ENEMY][i]->GetActive())
+		for (list<Object*>::iterator iter2 = iterPig->second.begin();
+			iter2 != iterPig->second.end(); ++iter2)// 모르겠음 타겟?
 		{
-			((Bullet*)ObjectList[OBJID_BULLET][i])->SetTarget(
-				ObjectList[OBJID_ENEMY][0]);
-			((SkillBullet*)ObjectList[OBJID_SKBULLET][i])->SetTarget(
-				ObjectList[OBJID_ENEMY][0]);
-			break;
+			if ((*iter)->GetActive())
+			{
+				if ((*iter2)->GetActive())
+				{
+					((Bullet*)(*iter))->SetTarget(
+						(*iter2));
+
+					((SkillBullet*)(*iter))->SetTarget(
+						(*iter2));
+					break;
+				}
+			}
 		}
 	}
+
+
 
 	for (int i = 0; i < 128; i++)
 	{
@@ -234,7 +255,7 @@ void ObjectManager::Update()
 		}
 	}
 	pPlayer->Update();
-	
+
 	if (EnemyCount <= 0)
 	{
 		switch (pEnemyID)
@@ -265,7 +286,7 @@ void ObjectManager::Render()
 	}
 
 
-	
+
 	for (int i = 0; i < OBJID_MAX; i++)
 	{
 		for (int j = 0; j < 128; j++)
@@ -394,7 +415,7 @@ void ObjectManager::CreateEnemy()
 			++EnemyCount; // 몬스터 +1
 
 		}
-		for (int i = 3; i <5; i++)
+		for (int i = 3; i < 5; i++)
 		{
 			if (i < 4)
 			{
@@ -428,14 +449,14 @@ void ObjectManager::CreateEnemy()
 		break;
 
 	case ENEMYID_DOG:
-		
-		
+
+
 		ObjectList[OBJID_ENEMY][0]->SetPosition(70.0f, 15.0f); // 27 : 2
 		ObjectList[OBJID_ENEMY][0]->SetActive(true);
 
 		++EnemyCount; // 몬스터 +1
 
-		
+
 		break;
 	}
 
@@ -462,7 +483,7 @@ void ObjectManager::CreateEnemy()
 	//		++EnemyCount; // 몬스터 +1
 	//	}
 	//}
-	
+
 }
 
 

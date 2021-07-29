@@ -7,7 +7,7 @@ private:
 	//int Count; // 무엇을 카운트 하는가
 	Object* Target; // Pig를 타겟으로 할건뎅.. 무엇이냐!!
 public:
-	virtual void Initialize()override { strKey = "Bullet"; }
+	virtual void Initialize()override;
 	virtual int Update()override;
 	virtual void Render()override;
 	virtual void Release()override;

@@ -9,7 +9,7 @@ private:
 
 
 public:
-	virtual void Initialize()override { strKey = "RbBul"; }
+	virtual void Initialize()override;
 	virtual int Update()override;
 	virtual void Render()override;
 	virtual void Release()override;
