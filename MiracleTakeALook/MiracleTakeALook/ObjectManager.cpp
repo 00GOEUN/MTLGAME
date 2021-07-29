@@ -24,14 +24,12 @@ ObjectManager* ObjectManager::m_pInstance = NULL;
 
 ObjectManager::ObjectManager()
 {
-
 }
 
 ObjectManager::~ObjectManager()
 {
 	Release();
 }
-
 void ObjectManager::AddObject(Object* _pObject)
 {
 	//** 지금 전달받은 매개변수의 키값을 확인한다.
@@ -72,11 +70,12 @@ void ObjectManager::Initialize()
 		BoxList[3] = new Stage1Box3;
 		BoxList[3]->Initialize();
 		BoxMax = 4;
+		Enemy = "Pig";
 		//for (int i = 0; i < 128; i++)
 		//	ObjectList[OBJID_ENEMY][i] = ObjectFactory<Pig>::CreateObject();
 		for (int i = 0; i < 4; i++)
 			ObjectManager::GetInstance()->AddObject(
-				ObjectFactory<Bullet>::CreateObject());
+				ObjectFactory<Pig>::CreateObject());
 
 		break;
 	case ENEMYID_RABBIT:
@@ -91,6 +90,8 @@ void ObjectManager::Initialize()
 		BoxList[5] = new Stage2Box5;
 		BoxList[5]->Initialize();
 		BoxMax = 6;
+		Enemy = "Rabbit";
+
 		//for (int i = 0; i < 128; i++)
 		//	ObjectList[OBJID_ENEMY][i] = ObjectFactory<Rabbit>::CreateObject();
 		for (int i = 0; i < 5; i++)
@@ -99,6 +100,8 @@ void ObjectManager::Initialize()
 		break;
 	case ENEMYID_DOG:
 		BoxMax = 1;
+		Enemy = "Dog";
+
 		//for (int i = 0; i < 128; i++)
 		//	ObjectList[OBJID_ENEMY][i] = ObjectFactory<Dog>::CreateObject();
 		break;
@@ -135,7 +138,7 @@ void ObjectManager::Update()
 	//	// CreateEnemy();
 
 
-
+	
 
 	//** 라인 충돌
 	for (int i = 0; i < BoxMax; i++)
@@ -144,7 +147,7 @@ void ObjectManager::Update()
 		{
 			if (CollisionManager::CollisionLine(pPlayer->GetTransform(), BoxList[i]->GetTransform()))
 			{
-				if ((pPlayer->GetPosition().y + pPlayer->GetScale().y) >= BoxList[i]->GetPosition().y)
+				if ( (pPlayer->GetPosition().y + pPlayer->GetScale().y) >= BoxList[i]->GetPosition().y)
 				{
 					if (BoxList[i]->GetKey() == "Ground")
 					{
@@ -161,11 +164,28 @@ void ObjectManager::Update()
 			}
 		}
 	}
+	
 
 
 
+	
 
-
+	// 오브젝트 제거?
+	// for (int i = 0; i < OBJID_MAX; i++)
+	// {
+	// 	for (int j = 0; j < 128; j++)
+	// 	{
+	// 		int iResult = 0; // ?
+	// 		if (ObjectList[i][j]->GetActive()) 
+	// 			iResult = ObjectList[i][j]->Update();
+	// 		if (iResult == 1)
+	// 			ObjectList[i][j]->SetActive(false);
+	// 		if (iResult == -1)
+	// 			--EnemyCount; // 몬스터 수 -1
+	// 
+	// 	}
+	// }
+	// ↓ 변경 후
 	{
 		int iResult = 0;
 
@@ -188,17 +208,29 @@ void ObjectManager::Update()
 			}
 		}
 	}
-
-
-	map<string, list<Object*>>::iterator iterPig = ObjectList.find("Pig");
+	
+	// 이게 뭐드랑..
+	// for (int i = 0; i < 128; i++)
+	// {
+	// 	if (ObjectList[OBJID_ENEMY][i]->GetActive())
+	// 	{
+	// 		((Bullet*)ObjectList[OBJID_BULLET][i])->SetTarget(
+	// 			ObjectList[OBJID_ENEMY][0]);
+	// 		((SkillBullet*)ObjectList[OBJID_SKBULLET][i])->SetTarget(
+	// 		 	ObjectList[OBJID_ENEMY][0]);
+	// 		break;
+	// 	}
+	// }
+	map<string, list<Object*>>::iterator iterEnemy = ObjectList.find(Enemy);
 	map<string, list<Object*>>::iterator iterBullet = ObjectList.find("Bullet");
+	//map<string, list<Object*>>::iterator iterSkBullet = ObjectList.find("SkillBullet");
 
-	if (iterPig != ObjectList.end() && iterBullet != ObjectList.end())
-		for (list<Object*>::iterator iter = iterPig->second.begin();
-			iter != iterPig->second.end(); ++iter)// 모르겠음 타겟?
+	if (iterEnemy != ObjectList.end() && iterBullet != ObjectList.end())
+		for (list<Object*>::iterator iter = iterBullet->second.begin();
+			iter != iterBullet->second.end(); ++iter)
 	{
-		for (list<Object*>::iterator iter2 = iterPig->second.begin();
-			iter2 != iterPig->second.end(); ++iter2)// 모르겠음 타겟?
+		for (list<Object*>::iterator iter2 = iterEnemy->second.begin();
+			iter2 != iterEnemy->second.end(); ++iter2)
 		{
 			if ((*iter)->GetActive())
 			{
@@ -207,55 +239,95 @@ void ObjectManager::Update()
 					((Bullet*)(*iter))->SetTarget(
 						(*iter2));
 
-					((SkillBullet*)(*iter))->SetTarget(
-						(*iter2));
+					//((SkillBullet*)(*iter))->SetTarget(
+					//	(*iter2));
 					break;
 				}
 			}
 		}
 	}
 
-
-
-	for (int i = 0; i < 128; i++)
+	// 몬스터가 공격에 닿으면 사라지는
+	//for (int i = 0; i < 128; i++)
+	//{
+	//	for (int j = 0; j < 128; j++)
+	//	{
+	//		if (ObjectList[OBJID_ENEMY][i]->GetActive())
+	//		{
+	//			if (ObjectList[OBJID_BULLET][j]->GetActive())
+	//			{
+	//				// true일 경우 : 몬스터가 공격에 닿았을 경우
+	//				if (CollisionManager::CollisionRact(
+	//					ObjectList[OBJID_ENEMY][i]->GetTransform(),
+	//					ObjectList[OBJID_BULLET][j]->GetTransform()))
+	//				{
+	//
+	//
+	//
+	//					ObjectList[OBJID_ENEMY][i]->SetActive(false);
+	//					ObjectList[OBJID_BULLET][j]->SetActive(false);
+	//					--EnemyCount; // 몬스터 수 -1
+	//				}
+	//			}
+	//			if (ObjectList[OBJID_SKBULLET][j]->GetActive())
+	//			{
+	//				// true일 경우 : 몬스터가 공격에 닿았을 경우
+	//				if (CollisionManager::CollisionRact(
+	//					ObjectList[OBJID_ENEMY][i]->GetTransform(),
+	//					ObjectList[OBJID_SKBULLET][j]->GetTransform()))
+	//				{
+	//
+	//					ObjectList[OBJID_ENEMY][i]->SetActive(false);
+	//					ObjectList[OBJID_SKBULLET][j]->SetActive(false);
+	//					--EnemyCount; // 몬스터 수 -1
+	//				}
+	//			}
+	//		}
+	//	}
+	// ↓ 변경 후 죽여줘...
+	// 모르겠소.. 힘드오.. 
+	if (iterEnemy != ObjectList.end() && iterBullet != ObjectList.end())
+		for (list<Object*>::iterator iter = iterBullet->second.begin();
+			iter != iterBullet->second.end(); ++iter)
 	{
-		for (int j = 0; j < 128; j++)
+		for (list<Object*>::iterator iter2 = iterEnemy->second.begin();
+			iter2 != iterEnemy->second.end(); ++iter2)
 		{
-			if (ObjectList[OBJID_ENEMY][i]->GetActive())
+			if ((*iter2)->GetActive())
 			{
-				if (ObjectList[OBJID_BULLET][j]->GetActive())
+				if ((*iter)->GetActive())
 				{
 					// true일 경우 : 몬스터가 공격에 닿았을 경우
 					if (CollisionManager::CollisionRact(
 						ObjectList[OBJID_ENEMY][i]->GetTransform(),
 						ObjectList[OBJID_BULLET][j]->GetTransform()))
 					{
-
-
-
+		
+		
+		
 						ObjectList[OBJID_ENEMY][i]->SetActive(false);
 						ObjectList[OBJID_BULLET][j]->SetActive(false);
 						--EnemyCount; // 몬스터 수 -1
 					}
 				}
-				if (ObjectList[OBJID_SKBULLET][j]->GetActive())
-				{
-					// true일 경우 : 몬스터가 공격에 닿았을 경우
-					if (CollisionManager::CollisionRact(
-						ObjectList[OBJID_ENEMY][i]->GetTransform(),
-						ObjectList[OBJID_SKBULLET][j]->GetTransform()))
-					{
-
-						ObjectList[OBJID_ENEMY][i]->SetActive(false);
-						ObjectList[OBJID_SKBULLET][j]->SetActive(false);
-						--EnemyCount; // 몬스터 수 -1
-					}
-				}
+				//if (ObjectList[OBJID_SKBULLET][j]->GetActive())
+				//{
+				//	// true일 경우 : 몬스터가 공격에 닿았을 경우
+				//	if (CollisionManager::CollisionRact(
+				//		ObjectList[OBJID_ENEMY][i]->GetTransform(),
+				//		ObjectList[OBJID_SKBULLET][j]->GetTransform()))
+				//	{
+				//
+				//		ObjectList[OBJID_ENEMY][i]->SetActive(false);
+				//		ObjectList[OBJID_SKBULLET][j]->SetActive(false);
+				//		--EnemyCount; // 몬스터 수 -1
+				//	}
+				//}
 			}
 		}
-	}
-	pPlayer->Update();
 
+	pPlayer->Update();
+	
 	if (EnemyCount <= 0)
 	{
 		switch (pEnemyID)
@@ -286,7 +358,7 @@ void ObjectManager::Render()
 	}
 
 
-
+	
 	for (int i = 0; i < OBJID_MAX; i++)
 	{
 		for (int j = 0; j < 128; j++)
@@ -415,7 +487,7 @@ void ObjectManager::CreateEnemy()
 			++EnemyCount; // 몬스터 +1
 
 		}
-		for (int i = 3; i < 5; i++)
+		for (int i = 3; i <5; i++)
 		{
 			if (i < 4)
 			{
@@ -449,14 +521,14 @@ void ObjectManager::CreateEnemy()
 		break;
 
 	case ENEMYID_DOG:
-
-
+		
+		
 		ObjectList[OBJID_ENEMY][0]->SetPosition(70.0f, 15.0f); // 27 : 2
 		ObjectList[OBJID_ENEMY][0]->SetActive(true);
 
 		++EnemyCount; // 몬스터 +1
 
-
+		
 		break;
 	}
 
@@ -483,7 +555,7 @@ void ObjectManager::CreateEnemy()
 	//		++EnemyCount; // 몬스터 +1
 	//	}
 	//}
-
+	
 }
 
 

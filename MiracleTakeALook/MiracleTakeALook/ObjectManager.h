@@ -19,6 +19,7 @@ public:
 private:
 	map<string, list<Object*>> ObjectList;
 	int pEnemyID;
+	string Enemy;
 	Object* pPlayer; // 플레이어
 	//Object* ObjectList[OBJID_MAX][128];  // 오브젝트리스트[2][128] : 2차원 배열로 생성
 	int EnemyCount; //몬스터 수
