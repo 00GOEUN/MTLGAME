@@ -48,7 +48,6 @@ int main(void)
 	while (true)
 	{
 		cout << "1. 국어 2. 영어 3. 수학 4. 종료\n선택: "; cin >> pick;
-		
 	
 	}
 
