@@ -51,6 +51,9 @@ void Player::Initialize()
 	m_Time = 0.0f; // 시간 0 초기화
 	Horizontal = 0;
 	m_JumpDown = false;
+
+	m_strKey = "Player";
+
 }
 
 int Player::Update()
