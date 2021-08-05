@@ -6,16 +6,12 @@
 #include <map>
 #include <fstream>
 
-// 실행 오류
-// 엑셀 설치 중..
-
 using namespace std;
 
 struct StudentInfo
 {
 	char* Name;
 	int Index;
-
 	int Kor;
 	int Eng;
 	int Math;
@@ -26,51 +22,88 @@ struct StudentInfo
 list<StudentInfo> StudentList;
 
 void LoadDate();
+void ScoreSwap(StudentInfo& _A, StudentInfo& _B);
 
 int main(void)
 {
 	LoadDate();
 
-	for (list<StudentInfo>::iterator iter = StudentList.begin();
-		iter != StudentList.end(); ++iter)
-	{
-		cout << iter->Index << " : " << iter->Name << endl;
-		cout << "국어 점수 : " << iter->Kor << endl;
-		cout << "영어 점수 : " << iter->Eng << endl;
-		cout << "수학 점수 : " << iter->Math << endl << endl;
-	}
+	
 
 	//** 읽어온 데이터를 각각의 점수에 따라 내림차순 정렬을 할것이다.
 	//** 국어, 영어, 수학 점수별로 선택한 후 선택된 과목의 점수를 내림차순 정렬할것.
 	
-	int pick;
 
 	while (true)
 	{
-		cout << "1. 국어 2. 영어 3. 수학 4. 종료\n선택: "; cin >> pick;
+		int pick;
+		cout << "1. 전체 출력 2. 선택 출력(내림차순) 3. 종료\n선택: "; cin >> pick;
 	
 
 		switch (pick)
 		{
-		case 1: // ??
-			
+		case 1: // 전체 출력
+			for (list<StudentInfo>::iterator iter = StudentList.begin();
+				iter != StudentList.end(); ++iter)
+			{
+				cout << iter->Index << " : " << iter->Name << endl;
+				cout << "국어 점수 : " << iter->Kor << endl;
+				cout << "영어 점수 : " << iter->Eng << endl;
+				cout << "수학 점수 : " << iter->Math << endl << endl;
+			}
 			break;
-		case 2: // 정렬
-			pick = 0;
-			cout << "1. 국어 점수 정렬" << endl;
-			cout << "2. 영어 점수 정렬" << endl;
-			cout << "3. 수학 점수 정렬" << endl;
-			cout << "선택: "; cin >> pick;
+		case 2: // 선택
+			int pick;
+			cout << "1. 국어 점수 정렬 2. 영어 점수 정렬 3. 수학 점수 정렬\n선택: "; cin >> pick;
 			switch (pick)
 			{
 			case 1: // 국어
+				for (list<StudentInfo>::iterator iter = StudentList.begin();
+					iter != StudentList.end(); ++iter)
+				{
+					for (list<StudentInfo>::iterator iter2 = iter;
+						iter2 != StudentList.end(); ++iter2)
+					{
+						if ((*iter).Kor < (*iter2).Kor)
+						{
+							ScoreSwap((*iter), (*iter2));
 
+						}
+					}
+					cout << iter->Name << " : " << iter->Kor << endl;
+				}
 				break;
 			case 2: // 영어
+				for (list<StudentInfo>::iterator iter = StudentList.begin();
+					iter != StudentList.end(); ++iter)
+				{
+					for (list<StudentInfo>::iterator iter2 = iter;
+						iter2 != StudentList.end(); ++iter2)
+					{
+						if ((*iter).Eng < (*iter2).Eng)
+						{
+							ScoreSwap((*iter), (*iter2));
 
+						}
+					}
+					cout << iter->Name << " : " << iter->Eng << endl;
+				}
 				break;
 			case 3: // 수학
+				for (list<StudentInfo>::iterator iter = StudentList.begin();
+					iter != StudentList.end(); ++iter)
+				{
+					for (list<StudentInfo>::iterator iter2 = iter;
+						iter2 != StudentList.end(); ++iter2)
+					{
+						if ((*iter).Math < (*iter2).Math)
+						{
+							ScoreSwap((*iter), (*iter2));
 
+						}
+					}
+					cout << iter->Name << " : " << iter->Math << endl;
+				}
 				break;
 			}
 
@@ -97,7 +130,7 @@ void LoadDate()
 
 		char buffer[128] = "";
 
-		fscanf(pFileCSV, "%d,%d,%d,%d,%s",
+		fscanf(pFileCSV, "%d,%d,%d,%d, %s",
 			&Info.Index, &Info.Kor, &Info.Eng, &Info.Math, buffer);
 
 
@@ -111,4 +144,12 @@ void LoadDate()
 
 	//** 파일을 닫는다.
 	fclose(pFileCSV);
+}
+
+void ScoreSwap(StudentInfo& _A, StudentInfo& _B)
+{
+	StudentInfo Tmp = _A;
+
+	_A = _B;
+	_B = Tmp;
 }
