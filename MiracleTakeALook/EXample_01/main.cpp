@@ -22,8 +22,8 @@ struct StudentInfo
 };
 
 
-list<StudentInfo> StudentList;
 
+list<StudentInfo> StudentList;
 
 void LoadDate();
 
@@ -42,10 +42,31 @@ int main(void)
 
 	//** 읽어온 데이터를 각각의 점수에 따라 내림차순 정렬을 할것이다.
 	//** 국어, 영어, 수학 점수별로 선택한 후 선택된 과목의 점수를 내림차순 정렬할것.
+	
 
-	LoadDate();
+	while (true)
+	{
+		int pick;
+		cout << "1. 국어 2. 영어 3. 수학 4. 종료\n선택: ";
+		
+	
+	}
 
-
+	switch (pick)
+	{
+	case 1: // 국어 
+		
+		break;
+	case 2: // 영어
+		
+		break;
+	case 3: // 수학
+		
+		break;
+	case 4: // 종료
+		exit(NULL);
+		break;
+	}
 
 	return 0;
 }
