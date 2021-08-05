@@ -49,37 +49,36 @@ int main(void)
 	{
 		cout << "1. 국어 2. 영어 3. 수학 4. 종료\n선택: "; cin >> pick;
 	
-	}
 
-	switch (pick)
-	{
-	case 1: // ??
-		
-		break;
-	case 2: // 정렬
-		pick = 0;
-		cout << "1. 국어 점수 정렬" << endl;
-		cout << "2. 영어 점수 정렬" << endl;
-		cout << "3. 수학 점수 정렬" << endl;
-		cout << "선택: "; cin >> pick;
 		switch (pick)
 		{
-		case 1:
+		case 1: // ??
+			
+			break;
+		case 2: // 정렬
+			pick = 0;
+			cout << "1. 국어 점수 정렬" << endl;
+			cout << "2. 영어 점수 정렬" << endl;
+			cout << "3. 수학 점수 정렬" << endl;
+			cout << "선택: "; cin >> pick;
+			switch (pick)
+			{
+			case 1: // 국어
 
+				break;
+			case 2: // 영어
+
+				break;
+			case 3: // 수학
+
+				break;
+			}
 
 			break;
-		case 2:
-
-			break;
-		case 3:
-
+		case 3: // 종료
+			exit(NULL);
 			break;
 		}
-
-		break;
-	case 3: // 종료
-		exit(NULL);
-		break;
 	}
 
 	return 0;
