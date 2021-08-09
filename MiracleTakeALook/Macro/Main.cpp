@@ -2,6 +2,44 @@
 
 using namespace std;
 
+// 삭제 '형태 &' 붙여주기
+// 레퍼런스 함수에는 r을 붙여줌 ex) rObj
+template <typename T>
+inline void Safe_Relase(T& _rObj)
+{						
+		if (_rObj)		
+		{				
+			delete _rObj;
+			_rObj = NULL;
+		}				
+}
+
+#define SAFE_DELETE(_Obj){	\
+	Safe_Relase(_Obj);		\
+}
+
+
+// singlrton
+#define DECLARE_SINGLETON(type)					\
+static type** GetInstance()						\
+{												\
+	static type* pInstance = new type;			\
+												\
+	if (pInstance == NULL)						\
+		pInstance = new type;					\
+	return &pInstance;							\
+}												\
+static void	DestroyInstance()					\
+{												\
+	type** ppInstance = GetInstance();			\
+												\
+	if ((*ppInstance) != NULL)					\
+	{											\
+		delete *ppInstance;						\
+		ppInstance = NULL;						\
+	}											\
+}
+
 // 상수, 정수
 
 #define MAX 128
@@ -10,15 +48,38 @@ using namespace std;
 
 #define Output2(x,y) cout << (x+y) << endl;
 
-// 삭제
-//#define Safe_Delete(Obj)
 // 함수를 상수화
 // \ : 다음 줄을 같은 줄로 인식
-
 #define Output3(x, y)			\
 {								\
 	cout << (x + y) << endl;	\
 }
+
+#define GETSINGLETON(type) (*type::GetInstance())
+#define DESTROYSINGLETON(type) (*type::GetInstance())->DestroyInstance()
+
+
+class Object 
+{
+public:
+	DECLARE_SINGLETON(Object)
+public:
+	int Number;
+	void Output4() {cout << "Object" << endl; }
+
+public:
+	Object() {}
+	~Object() {}
+
+};
+
+
+
+
+
+
+
+
 
 int main(void)
 {
@@ -40,9 +101,31 @@ int main(void)
 	Output2(Num1, Num2);
 
 	// Output3 // 함수 뒤에는 ; 필요X
-	Output3(Num1, Num2)
+	Output3(Num1, Num2);
+
+	// SAFE_DELETE 안되는 듯??
+	/*
 	
+	Object* pObj = new Object;
+	pObj->Output4();
+
+	// 방법 1
+	SAFE_DELETE(pObj);
+	pObj->Output4();
+
+	// 방법 2
+	delete pObj;
+	pObj = NULL;
+	pObj->Output4();
+	*/
+
+	GETSINGLETON(Object)->Number = 10;
+	GETSINGLETON(Object)->Output4();
+
+	cout << GETSINGLETON(Object)->Number << endl;
+
+	DESTROYSINGLETON(Object);
 
 
-	return 0;
-}
+		return 0;
+};
