@@ -111,6 +111,8 @@ int main(void)
 				//ObjectPool* pTmp = new ObjectPool(count++, 0, fales);
 				ObjectPoolList.push_back(new ObjectPool(Count++, 0, false));
 			}
+			// 종료되었을때 어떻게 할지~
+			// 할지말지를 물어봄
 			else
 			{
 				for (list< ObjectPool*>::iterator iter = ObjectPoolList.begin();
@@ -118,18 +120,29 @@ int main(void)
 				{
 					if (!(*iter)->Active)
 					{
-						(*iter)->Active = true;
-						(*iter)->Key = 0;
-						(*iter)->Value = 0;
+						int Pick;
+						cout << "1. GO 2. EXIT"; cin >> Pick;
+						switch (Pick)
+						{
+						case 1: // go
+							(*iter)->Active = true;
+							(*iter)->Key = 0;
+							(*iter)->Value = 0;
+							break;
+						case 2:
+							exit(NULL);
+							break;
+
+						}
 						break;
+
 					}
 				}
 			}
 		}
 			//InputKey(Array[Count]);
 
-		// 숙제 마지막~ 머라..?
-		// 그
+		
 
 
 		for (list< ObjectPool*>::iterator iter = ObjectPoolList.begin();
