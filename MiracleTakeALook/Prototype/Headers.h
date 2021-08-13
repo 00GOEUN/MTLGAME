@@ -8,6 +8,5 @@
 using namespace std;
 
 #include "Struct.h"
-#include "Object.h"
 
 
