@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{84e737c4-4e56-49a4-b718-c8e06e33ba4f}</ProjectGuid>
-    <RootNamespace>Prototype</RootNamespace>
+    <ProjectGuid>{e7a44af6-253f-4f9f-841c-dd5befe8ebb8}</ProjectGuid>
+    <RootNamespace>Pattern</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -140,14 +140,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Headers.h" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="ObjectPoolManager.cpp" />
     <ClCompile Include="PrototypeManager.cpp" />
-    <ClCompile Include="Struct.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Object.h" />
+    <ClInclude Include="ObjectPoolManager.h" />
     <ClInclude Include="PrototypeManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

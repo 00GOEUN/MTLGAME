@@ -13,39 +13,39 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="소스 파일\00.PrototypeManager">
-      <UniqueIdentifier>{10d03da0-dca3-4d71-ba9d-7071df0420be}</UniqueIdentifier>
+    <Filter Include="소스 파일\Object">
+      <UniqueIdentifier>{c287ee3f-82f5-499e-9f7f-0427d03351d8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\01.Object">
-      <UniqueIdentifier>{dea5903a-53a7-4625-abf5-f74362ad9a75}</UniqueIdentifier>
+    <Filter Include="소스 파일\ObjectPoolManager">
+      <UniqueIdentifier>{6f051efd-7e88-430d-8b23-10111a9e7786}</UniqueIdentifier>
     </Filter>
-    <Filter Include="헤더 파일\InClude">
-      <UniqueIdentifier>{0595d3ff-a3a9-4b24-95f0-455528fd2e3c}</UniqueIdentifier>
+    <Filter Include="소스 파일\PrototypeManager">
+      <UniqueIdentifier>{4d116702-835c-4c54-8f27-b7b070eb2cb3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Headers.h">
-      <Filter>헤더 파일</Filter>
+    <ClCompile Include="Object.cpp">
+      <Filter>소스 파일\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Struct.h">
-      <Filter>헤더 파일</Filter>
+    <ClCompile Include="ObjectPoolManager.cpp">
+      <Filter>소스 파일\ObjectPoolManager</Filter>
     </ClCompile>
     <ClCompile Include="PrototypeManager.cpp">
-      <Filter>소스 파일\00.PrototypeManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>소스 파일\01.Object</Filter>
+      <Filter>소스 파일\PrototypeManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PrototypeManager.h">
-      <Filter>소스 파일\00.PrototypeManager</Filter>
-    </ClInclude>
     <ClInclude Include="Object.h">
-      <Filter>소스 파일\01.Object</Filter>
+      <Filter>소스 파일\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectPoolManager.h">
+      <Filter>소스 파일\ObjectPoolManager</Filter>
+    </ClInclude>
+    <ClInclude Include="PrototypeManager.h">
+      <Filter>소스 파일\PrototypeManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
