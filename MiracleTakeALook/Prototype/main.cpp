@@ -25,17 +25,31 @@ void InitObject(string _Key)
 
 	// 원형객체를 정상적으로 참조할 경우
 	// pObjList 를 초기화
-	for (int i = 0; i < 3; ++i)
+	//for (int i = 0; i < 3; ++i)
+	//{
+	//	// 참조된 원형 객체의 복사본을 넘겨줌
+	//	pObjList[i] = pObj->Clone();
+	//
+	//
+	//	// 그리고 본사본을 초기화함
+	//	pObjList[i]->Initialize();
+	//
+	//	// 복사본의 인덱스값을 변경.
+	//	pObjList[i]->SetIndex(i + 1);
+	//}
+	// List 변경
+	for (list<Transform*>::iterator iter = TransformList.begin();
+		iter != TransformList.end(); ++iter)
 	{
 		// 참조된 원형 객체의 복사본을 넘겨줌
-		pObjList[i] = pObj->Clone();
+		pObjList[iter] = pObj->Clone();
 
 
 		// 그리고 본사본을 초기화함
-		pObjList[i]->Initialize();
+		pObjList[iter]->Initialize();
 
 		// 복사본의 인덱스값을 변경.
-		pObjList[i]->SetIndex(i + 1);
+		pObjList[iter]->SetIndex(i + 1);
 	}
 }
 int main(void)
@@ -95,7 +109,11 @@ int main(void)
 	for (list<Transform*>::iterator iter = TransformList.begin();
 		iter != TransformList.end(); ++iter)
 		// 적어야됨
-
+		if (pObjList[iter])
+		{
+			delete pObjList[iter];
+			pObjList[iter] = nullptr;
+		}
 
 
 	return 0;
