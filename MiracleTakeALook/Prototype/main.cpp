@@ -3,6 +3,7 @@
 
 Object* pObjList[3];
 
+list<Object*> ObjectList;
 
 void InitObject(string _Key)
 {
@@ -38,18 +39,17 @@ void InitObject(string _Key)
 	//	pObjList[i]->SetIndex(i + 1);
 	//}
 	// List 변경
-	for (list<Transform*>::iterator iter = TransformList.begin();
-		iter != TransformList.end(); ++iter)
+	for (list<Object*>::iterator iter = ObjectList.begin();
+		iter != ObjectList.end(); ++iter)
 	{
 		// 참조된 원형 객체의 복사본을 넘겨줌
-		pObjList[iter] = pObj->Clone();
-
+		(*iter)->Clone();
 
 		// 그리고 본사본을 초기화함
-		pObjList[iter]->Initialize();
+		(*iter)->Initialize();
 
 		// 복사본의 인덱스값을 변경.
-		pObjList[iter]->SetIndex(i + 1);
+		(*iter)->SetIndex(iter + 1);
 	}
 }
 int main(void)
@@ -84,8 +84,8 @@ int main(void)
 	//	if (pObjList[i])
 	//		pObjList[i]->Render(i);
 	// list 변경
-	for (list<Transform*>::iterator iter = TransformList.begin();
-		iter != TransformList.end(); ++iter)
+	for (list<Object*>::iterator iter = ObjectList.begin();
+		iter != ObjectList.end(); ++iter)
 		// 적어야 됨
 
 	/*
@@ -106,14 +106,14 @@ int main(void)
 	//		pObjList[i] = nullptr;
 	//	}
 	//}
-	for (list<Transform*>::iterator iter = TransformList.begin();
-		iter != TransformList.end(); ++iter)
+		for (list<Object*>::iterator iter = ObjectList.begin();
+			iter != ObjectList.end(); ++iter)
 		// 적어야됨
-		if (pObjList[iter])
-		{
-			delete pObjList[iter];
-			pObjList[iter] = nullptr;
-		}
+			if ((*iter))
+			{
+				delete (*iter);
+				(*iter) = nullptr;
+			}
 
 
 	return 0;
