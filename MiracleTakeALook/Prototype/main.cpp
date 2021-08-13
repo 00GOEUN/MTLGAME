@@ -1,14 +1,12 @@
 #include "PrototypeManager.h"
 #include "Object.h"
 
-Object* pObjList[3];
+//Object* pObjList[3];
 
 list<Object*> ObjectList;
 
 void InitObject(string _Key)
 {
-
-
 	// PrototypeManager 에서 원본 객체를 찾아옴
 	Object* pObj = PrototypeManager::GetInstance()->FineObject(_Key);
 
@@ -25,31 +23,14 @@ void InitObject(string _Key)
 	}
 
 	// 원형객체를 정상적으로 참조할 경우
-	// pObjList 를 초기화
-	//for (int i = 0; i < 3; ++i)
-	//{
-	//	// 참조된 원형 객체의 복사본을 넘겨줌
-	//	pObjList[i] = pObj->Clone();
-	//
-	//
-	//	// 그리고 본사본을 초기화함
-	//	pObjList[i]->Initialize();
-	//
-	//	// 복사본의 인덱스값을 변경.
-	//	pObjList[i]->SetIndex(i + 1);
-	//}
-	// List 변경
-	for (list<Object*>::iterator iter = ObjectList.begin();
-		iter != ObjectList.end(); ++iter)
+	for (int i = 0; i < 3; ++i)
 	{
-		// 참조된 원형 객체의 복사본을 넘겨줌
-		(*iter)->Clone();
+		Object* pTempObj = pObj->Clone();
 
-		// 그리고 본사본을 초기화함
-		(*iter)->Initialize();
+		pTempObj->Initialize();
+		pTempObj->SetIndex(i);
 
-		// 복사본의 인덱스값을 변경.
-		(*iter)->SetIndex(iter + 1);
+		ObjectList.push_back(pTempObj);
 	}
 }
 int main(void)
@@ -87,6 +68,9 @@ int main(void)
 	for (list<Object*>::iterator iter = ObjectList.begin();
 		iter != ObjectList.end(); ++iter)
 		// 적어야 됨
+		(*iter)->Render();
+
+
 
 	/*
 	// 삭제/안됨

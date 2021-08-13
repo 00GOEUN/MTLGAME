@@ -9,10 +9,11 @@ private:
 public:
 	void Initialize();
 	int Update();
-	void Render(int _n);
+	void Render();
 public:
 	Object* Clone() { return new Object(*this); }
 	void SetIndex(int _index) { TransInfo.Index = _index; }
+
 public:
 	Object();
 	Object(const Transform& _TransInfo) : TransInfo(_TransInfo) { }
